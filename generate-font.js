@@ -1,6 +1,7 @@
 import webfontsGenerator from "webfonts-generator";
 import path from "node:path";
 import fs from "node:fs";
+import svgpath from "svgpath";
 
 const srcDir = path.resolve(process.cwd(), "src/assets/svg-to-ttf");
 const outDir = path.resolve(process.cwd(), "src/assets/font");
@@ -9,11 +10,7 @@ const MAX_ATTRIB_LENGTH = 64000;
 // 工具：將 24x24 path scale 到 1024x1024
 function scalePathData(pathData, fromSize = 24, toSize = 1024) {
   const scale = toSize / fromSize;
-  // 只處理 M/L/H/V/C/S/Q/T/A/Z/z 等 SVG path 指令
-  // 這裡用簡單的正則處理數字（不處理 arc 旗標等複雜情境）
-  return pathData.replace(/([\d.]+(?:e[\-+]?\d+)?)/gi, (num) => {
-    return parseFloat(num) * scale;
-  });
+  return svgpath(pathData).scale(scale).abs().toString();
 }
 
 // 1. 產生完全仿 IcoMoon 官方格式的 selection.json
