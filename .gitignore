@@ -6,13 +6,16 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+svg-to-ttf
 
-/src/assets/font
 node_modules
 dist
 dist-ssr
 *.local
 
+
+/src/assets/font
+/src/assets/svg-to-ttf
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

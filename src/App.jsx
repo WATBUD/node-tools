@@ -15,7 +15,7 @@ function App() {
         {/* 自動根據 selection.json 產生所有 CustomIcon */}
         {iconSet.icons.map(icon => (
           <div key={icon.properties.name}>
-            <CustomIcon name={icon.properties.name} size={60} color="#ff9800" style={{ marginBottom: 8 }} />
+            <CustomIcon name={icon.properties.name} size={35} color="#ff9800" style={{ marginBottom: 8 }} />
             <div className="label">{icon.properties.name} (IcoMoon)</div>
           </div>
         ))}
