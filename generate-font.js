@@ -7,10 +7,15 @@ const srcDir = path.resolve(process.cwd(), "src/assets/svg-to-ttf");
 const outDir = path.resolve(process.cwd(), "src/assets/font");
 const MAX_ATTRIB_LENGTH = 64000;
 
-// 工具：將 24x24 path scale 到 1024x1024
-function scalePathData(pathData, fromSize = 24, toSize = 1024) {
-  const scale = toSize / fromSize;
-  return svgpath(pathData).scale(scale).abs().toString();
+// 工具：根據 viewBox 將 path 平移到 (0,0) 並縮放到 1024x1024
+function normalizePathData(pathData, viewBox, toSize = 1024) {
+  const [minX, minY, width, height] = viewBox;
+  const scale = toSize / Math.max(width, height);
+  return svgpath(pathData)
+    .translate(-minX, -minY)
+    .scale(scale)
+    .abs()
+    .toString();
 }
 
 // 1. 產生完全仿 IcoMoon 官方格式的 selection.json
@@ -31,9 +36,14 @@ const icons = svgFiles.map((file, idx) => {
   }
   if (tooLong) return null;
   validSvgFiles.push(path.join(srcDir, file));
+  // 解析 viewBox
+  const viewBoxMatch = svgContent.match(/viewBox=["']\s*([\d.\-]+)\s+([\d.\-]+)\s+([\d.\-]+)\s+([\d.\-]+)\s*["']/);
+  const viewBox = viewBoxMatch
+    ? viewBoxMatch.slice(1, 5).map(Number)
+    : [0, 0, 24, 24]; // fallback
   // 解析 <path d="..." />
   const pathMatches = [...svgContent.matchAll(/<path[^>]*d=["']([^"']+)["'][^>]*>/g)];
-  const paths = pathMatches.map(m => scalePathData(m[1], 24, 1024));
+  const paths = pathMatches.map(m => normalizePathData(m[1], viewBox, 1024));
   return {
     icon: {
       paths,

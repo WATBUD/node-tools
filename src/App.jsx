@@ -16,7 +16,7 @@ function App() {
           <div key={icon.properties.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <CustomIcon name={icon.properties.name} size={35} color="#fff" 
             style={{ marginBottom: 8 }} />
-            <div className="label">{icon.properties.name} (IcoMoon)</div>
+            <div className="label">{icon.properties.name}</div>
           </div>
         ))}
         {/* 原本的 SVG 圖示展示 */}
