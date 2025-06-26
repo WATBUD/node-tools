@@ -15,7 +15,7 @@
         "isMulticolor2": false,
         "grid": 0,
         "tags": [
-          "Property 1=ArrowDown"
+          "arrowDown"
         ]
       },
       "attrs": [
@@ -26,7 +26,7 @@
       "properties": {
         "order": 1,
         "id": 1,
-        "name": "Property 1=ArrowDown",
+        "name": "arrowDown",
         "prevSize": 32,
         "code": 59648
       },
@@ -48,7 +48,7 @@
         "isMulticolor2": false,
         "grid": 0,
         "tags": [
-          "Property 1=ArrowLeft"
+          "arrowLeft"
         ]
       },
       "attrs": [
@@ -59,7 +59,7 @@
       "properties": {
         "order": 2,
         "id": 2,
-        "name": "Property 1=ArrowLeft",
+        "name": "arrowLeft",
         "prevSize": 32,
         "code": 59649
       },
@@ -81,7 +81,7 @@
         "isMulticolor2": false,
         "grid": 0,
         "tags": [
-          "Property 1=ArrowRight"
+          "arrowRight"
         ]
       },
       "attrs": [
@@ -92,7 +92,7 @@
       "properties": {
         "order": 3,
         "id": 3,
-        "name": "Property 1=ArrowRight",
+        "name": "arrowRight",
         "prevSize": 32,
         "code": 59650
       },
@@ -114,7 +114,7 @@
         "isMulticolor2": false,
         "grid": 0,
         "tags": [
-          "Property 1=ArrowUp"
+          "arrowUp"
         ]
       },
       "attrs": [
@@ -125,7 +125,7 @@
       "properties": {
         "order": 4,
         "id": 4,
-        "name": "Property 1=ArrowUp",
+        "name": "arrowUp",
         "prevSize": 32,
         "code": 59651
       },
@@ -147,7 +147,7 @@
         "isMulticolor2": false,
         "grid": 0,
         "tags": [
-          "Property 1=AutoBank"
+          "autoBank"
         ]
       },
       "attrs": [
@@ -158,7 +158,7 @@
       "properties": {
         "order": 5,
         "id": 5,
-        "name": "Property 1=AutoBank",
+        "name": "autoBank",
         "prevSize": 32,
         "code": 59652
       },
@@ -180,7 +180,7 @@
         "isMulticolor2": false,
         "grid": 0,
         "tags": [
-          "Property 1=BankTransfer"
+          "bankTransfer"
         ]
       },
       "attrs": [
@@ -191,7 +191,7 @@
       "properties": {
         "order": 6,
         "id": 6,
-        "name": "Property 1=BankTransfer",
+        "name": "bankTransfer",
         "prevSize": 32,
         "code": 59653
       },
@@ -213,7 +213,7 @@
         "isMulticolor2": false,
         "grid": 0,
         "tags": [
-          "Property 1=CheckboxOff"
+          "checkboxOff"
         ]
       },
       "attrs": [
@@ -224,7 +224,7 @@
       "properties": {
         "order": 7,
         "id": 7,
-        "name": "Property 1=CheckboxOff",
+        "name": "checkboxOff",
         "prevSize": 32,
         "code": 59654
       },
@@ -246,7 +246,7 @@
         "isMulticolor2": false,
         "grid": 0,
         "tags": [
-          "Property 1=CheckboxOn"
+          "checkboxOn"
         ]
       },
       "attrs": [
@@ -257,13 +257,46 @@
       "properties": {
         "order": 8,
         "id": 8,
-        "name": "Property 1=CheckboxOn",
+        "name": "checkboxOn",
         "prevSize": 32,
         "code": 59655
       },
       "setIdx": 0,
       "setId": 1,
       "iconIdx": 7
+    },
+    {
+      "icon": {
+        "paths": [
+          "M780.8298666666666 243.62538666666666C764.1898666666666 226.98538666666664 737.3098666666666 226.98538666666664 720.6698666666666 243.62538666666666L512.0298666666666 451.84L303.38986666666665 243.19872C286.74986666666666 226.55872 259.86986666666667 226.55872 243.22986666666668 243.19872C226.58986666666664 259.83871999999997 226.58986666666664 286.71871999999996 243.22986666666668 303.35871999999995L451.86986666666667 512L243.22986666666668 720.64C226.58986666666664 737.28 226.58986666666664 764.16 243.22986666666668 780.8C259.86986666666667 797.44 286.74986666666666 797.44 303.38986666666665 780.8L512.0298666666666 572.16L720.6698666666666 780.8C737.3098666666666 797.44 764.1898666666666 797.44 780.8298666666666 780.8C797.4698666666666 764.16 797.4698666666666 737.28 780.8298666666666 720.64L572.1898666666666 512L780.8298666666666 303.35871999999995C797.0432000000001 287.14538666666664 797.0432000000001 259.83871999999997 780.8298666666666 243.62538666666666Z"
+        ],
+        "attrs": [
+          {
+            "fill": "#000"
+          }
+        ],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "grid": 0,
+        "tags": [
+          "close"
+        ]
+      },
+      "attrs": [
+        {
+          "fill": "#000"
+        }
+      ],
+      "properties": {
+        "order": 9,
+        "id": 9,
+        "name": "close",
+        "prevSize": 32,
+        "code": 59656
+      },
+      "setIdx": 0,
+      "setId": 1,
+      "iconIdx": 8
     },
     {
       "icon": {
@@ -279,7 +312,7 @@
         "isMulticolor2": false,
         "grid": 0,
         "tags": [
-          "Property 1=Home"
+          "home"
         ]
       },
       "attrs": [
@@ -288,15 +321,15 @@
         }
       ],
       "properties": {
-        "order": 10,
-        "id": 10,
-        "name": "Property 1=Home",
+        "order": 11,
+        "id": 11,
+        "name": "home",
         "prevSize": 32,
-        "code": 59657
+        "code": 59658
       },
       "setIdx": 0,
       "setId": 1,
-      "iconIdx": 9
+      "iconIdx": 10
     },
     {
       "icon": {
@@ -313,7 +346,7 @@
         "isMulticolor2": false,
         "grid": 0,
         "tags": [
-          "Property 1=Invisible"
+          "invisible"
         ]
       },
       "attrs": [
@@ -322,15 +355,15 @@
         }
       ],
       "properties": {
-        "order": 12,
-        "id": 12,
-        "name": "Property 1=Invisible",
+        "order": 13,
+        "id": 13,
+        "name": "invisible",
         "prevSize": 32,
-        "code": 59659
+        "code": 59660
       },
       "setIdx": 0,
       "setId": 1,
-      "iconIdx": 11
+      "iconIdx": 12
     },
     {
       "icon": {
@@ -347,7 +380,7 @@
         "isMulticolor2": false,
         "grid": 0,
         "tags": [
-          "Property 1=Live Chat"
+          "live Chat"
         ]
       },
       "attrs": [
@@ -356,15 +389,15 @@
         }
       ],
       "properties": {
-        "order": 13,
-        "id": 13,
-        "name": "Property 1=Live Chat",
+        "order": 14,
+        "id": 14,
+        "name": "live Chat",
         "prevSize": 32,
-        "code": 59660
+        "code": 59661
       },
       "setIdx": 0,
       "setId": 1,
-      "iconIdx": 12
+      "iconIdx": 13
     },
     {
       "icon": {
@@ -380,7 +413,7 @@
         "isMulticolor2": false,
         "grid": 0,
         "tags": [
-          "Property 1=Promotion"
+          "promotion"
         ]
       },
       "attrs": [
@@ -389,15 +422,15 @@
         }
       ],
       "properties": {
-        "order": 14,
-        "id": 14,
-        "name": "Property 1=Promotion",
+        "order": 15,
+        "id": 15,
+        "name": "promotion",
         "prevSize": 32,
-        "code": 59661
+        "code": 59662
       },
       "setIdx": 0,
       "setId": 1,
-      "iconIdx": 13
+      "iconIdx": 14
     },
     {
       "icon": {
@@ -411,7 +444,7 @@
         "isMulticolor2": false,
         "grid": 0,
         "tags": [
-          "Property 1=Promotion2"
+          "promotion2"
         ]
       },
       "attrs": [
@@ -420,15 +453,15 @@
         }
       ],
       "properties": {
-        "order": 15,
-        "id": 15,
-        "name": "Property 1=Promotion2",
+        "order": 16,
+        "id": 16,
+        "name": "promotion2",
         "prevSize": 32,
-        "code": 59662
+        "code": 59663
       },
       "setIdx": 0,
       "setId": 1,
-      "iconIdx": 14
+      "iconIdx": 15
     },
     {
       "icon": {
@@ -444,7 +477,7 @@
         "isMulticolor2": false,
         "grid": 0,
         "tags": [
-          "Property 1=Search"
+          "search"
         ]
       },
       "attrs": [
@@ -453,15 +486,15 @@
         }
       ],
       "properties": {
-        "order": 16,
-        "id": 16,
-        "name": "Property 1=Search",
+        "order": 17,
+        "id": 17,
+        "name": "search",
         "prevSize": 32,
-        "code": 59663
+        "code": 59664
       },
       "setIdx": 0,
       "setId": 1,
-      "iconIdx": 15
+      "iconIdx": 16
     },
     {
       "icon": {
@@ -477,7 +510,7 @@
         "isMulticolor2": false,
         "grid": 0,
         "tags": [
-          "Property 1=Tournament"
+          "tournament"
         ]
       },
       "attrs": [
@@ -486,15 +519,15 @@
         }
       ],
       "properties": {
-        "order": 17,
-        "id": 17,
-        "name": "Property 1=Tournament",
+        "order": 18,
+        "id": 18,
+        "name": "tournament",
         "prevSize": 32,
-        "code": 59664
+        "code": 59665
       },
       "setIdx": 0,
       "setId": 1,
-      "iconIdx": 16
+      "iconIdx": 17
     },
     {
       "icon": {
@@ -510,40 +543,7 @@
         "isMulticolor2": false,
         "grid": 0,
         "tags": [
-          "Property 1=Visible"
-        ]
-      },
-      "attrs": [
-        {
-          "fill": "#000"
-        }
-      ],
-      "properties": {
-        "order": 18,
-        "id": 18,
-        "name": "Property 1=Visible",
-        "prevSize": 32,
-        "code": 59665
-      },
-      "setIdx": 0,
-      "setId": 1,
-      "iconIdx": 17
-    },
-    {
-      "icon": {
-        "paths": [
-          "M780.8298666666666 243.62538666666666C764.1898666666666 226.98538666666664 737.3098666666666 226.98538666666664 720.6698666666666 243.62538666666666L512.0298666666666 451.84L303.38986666666665 243.19872C286.74986666666666 226.55872 259.86986666666667 226.55872 243.22986666666668 243.19872C226.58986666666664 259.83871999999997 226.58986666666664 286.71871999999996 243.22986666666668 303.35871999999995L451.86986666666667 512L243.22986666666668 720.64C226.58986666666664 737.28 226.58986666666664 764.16 243.22986666666668 780.8C259.86986666666667 797.44 286.74986666666666 797.44 303.38986666666665 780.8L512.0298666666666 572.16L720.6698666666666 780.8C737.3098666666666 797.44 764.1898666666666 797.44 780.8298666666666 780.8C797.4698666666666 764.16 797.4698666666666 737.28 780.8298666666666 720.64L572.1898666666666 512L780.8298666666666 303.35871999999995C797.0432000000001 287.14538666666664 797.0432000000001 259.83871999999997 780.8298666666666 243.62538666666666Z"
-        ],
-        "attrs": [
-          {
-            "fill": "#000"
-          }
-        ],
-        "isMulticolor": false,
-        "isMulticolor2": false,
-        "grid": 0,
-        "tags": [
-          "Property 1=close"
+          "visible"
         ]
       },
       "attrs": [
@@ -554,7 +554,7 @@
       "properties": {
         "order": 19,
         "id": 19,
-        "name": "Property 1=close",
+        "name": "visible",
         "prevSize": 32,
         "code": 59666
       },

@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "build-font": "node generate-font.js",
+    "rename-svg-files": "node rename-svg-files.js",
+    "build-font-all": "npm run rename-svg-files && npm run build-font",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
