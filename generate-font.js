@@ -2,16 +2,20 @@ import svgtofont from "svgtofont";
 import path from "node:path";
 import fs from "node:fs";
 
-const srcDir = path.resolve(process.cwd(), "svg-to-ttf");
-const outDir = path.resolve(process.cwd(), "font");
+const srcDir = path.resolve(process.cwd(), "src/assets/svg-to-ttf");
+const outDir = path.resolve(process.cwd(), "src/assets/font");
 
 // 1. 掃描 svg 檔案，產生 selection.json
 const svgFiles = fs.readdirSync(srcDir).filter(f => f.endsWith('.svg'));
 const icons = svgFiles.map((file, idx) => {
   const name = file.replace(/\.svg$/, "");
+  const svgContent = fs.readFileSync(path.join(srcDir, file), 'utf8');
+  // 解析 <path d="..." />
+  const pathMatches = [...svgContent.matchAll(/<path[^>]*d=["']([^"']+)["'][^>]*>/g)];
+  const paths = pathMatches.map(m => m[1]);
   return {
     icon: {
-      paths: [], // SVG 路徑不處理，僅保留結構
+      paths, // 寫入 SVG path
       attrs: [{ fill: "#000" }],
       isMulticolor: false,
       isMulticolor2: false,
@@ -68,7 +72,7 @@ const selection = {
     showLiga: false
   }
 };
-if (!fs.existsSync(outDir)) fs.mkdirSync(outDir);
+if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 fs.writeFileSync(path.join(outDir, "selection.json"), JSON.stringify(selection, null, 2));
 console.log("已產生合併 selection.json");
 

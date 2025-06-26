@@ -1,0 +1,112 @@
+{
+  "IcoMoonType": "selection",
+  "icons": [
+    {
+      "icon": {
+        "paths": [
+          "M15.6429 5V6.57895H9.35714V5H15.6429ZM15.6429 8.15789V9.73684H9.35714V8.15789H15.6429ZM15.6429 11.3158V12.8947H9.35714V11.3158H15.6429ZM7 14.4737H18L12.5 20L7 14.4737Z"
+        ],
+        "attrs": [
+          {
+            "fill": "#000"
+          }
+        ],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "grid": 0,
+        "tags": [
+          "AutoBank"
+        ]
+      },
+      "attrs": [
+        {
+          "fill": "#000"
+        }
+      ],
+      "properties": {
+        "order": 1,
+        "id": 1,
+        "name": "AutoBank",
+        "prevSize": 32,
+        "code": 59648
+      },
+      "setIdx": 0,
+      "setId": 1,
+      "iconIdx": 0
+    },
+    {
+      "icon": {
+        "paths": [
+          "M2 15V12H5V10L9 13.5L5 17V15H2ZM22 8.7V10H10V8.7L16 5L22 8.7ZM10 17H22V19H10V17ZM15 11H17V16H15V11ZM11 11H13V16H11V11ZM19 11H21V16H19V11Z"
+        ],
+        "attrs": [
+          {
+            "fill": "#000"
+          }
+        ],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "grid": 0,
+        "tags": [
+          "BankTransfer"
+        ]
+      },
+      "attrs": [
+        {
+          "fill": "#000"
+        }
+      ],
+      "properties": {
+        "order": 2,
+        "id": 2,
+        "name": "BankTransfer",
+        "prevSize": 32,
+        "code": 59649
+      },
+      "setIdx": 0,
+      "setId": 1,
+      "iconIdx": 1
+    }
+  ],
+  "height": 1024,
+  "metadata": {
+    "name": "icomoon"
+  },
+  "preferences": {
+    "showGlyphs": true,
+    "showQuickUse": true,
+    "showQuickUse2": false,
+    "showSVGs": true,
+    "fontPref": {
+      "prefix": "icon-",
+      "metadata": {
+        "fontFamily": "icomoon"
+      },
+      "metrics": {
+        "emSize": 1024,
+        "baseline": 6.25,
+        "whitespace": 50
+      },
+      "embed": false,
+      "resetPoint": 59648,
+      "autoHost": true
+    },
+    "imagePref": {
+      "prefix": "icon-",
+      "png": true,
+      "useClassSelector": true,
+      "color": 0,
+      "bgColor": 16777215,
+      "classSelector": ".icon",
+      "name": "icomoon",
+      "height": 32,
+      "columns": 16,
+      "margin": 16
+    },
+    "historySize": 50,
+    "showCodes": false,
+    "gridSize": 16,
+    "quickUsageToken": {},
+    "showLiga": false
+  }
+}
