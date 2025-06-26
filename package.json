@@ -1,0 +1,13 @@
+{
+  "name": "svg-to-ttf-project",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Auto convert SVGs in svg-to-ttf to TTF font.",
+  "main": "generate-font.js",
+  "scripts": {
+    "build-font": "node generate-font.js"
+  },
+  "dependencies": {
+    "svgtofont": "^6.3.2"
+  }
+} 

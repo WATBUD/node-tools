@@ -1,0 +1,18 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<svg xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <font id="icons" horiz-adv-x="24">
+    <font-face font-family="icons"
+      units-per-em="24" ascent="24"
+      descent="0" />
+    <missing-glyph horiz-adv-x="0" />
+    <glyph glyph-name="AutoBank"
+      unicode="&#xEA01;"
+      horiz-adv-x="24" d="M15.6429 19V17.42105H9.35714V19H15.6429zM15.6429 15.84211V14.26316H9.35714V15.84211H15.6429zM15.6429 12.6842V11.1053H9.35714V12.6842H15.6429zM7 9.5263H18L12.5 4L7 9.5263z" />
+    <glyph glyph-name="BankTransfer"
+      unicode="&#xEA02;"
+      horiz-adv-x="24" d="M2 9V12H5V14L9 10.5L5 7V9H2zM22 15.3V14H10V15.3L16 19L22 15.3zM10 7H22V5H10V7zM15 13H17V8H15V13zM11 13H13V8H11V13zM19 13H21V8H19V13z" />
+  </font>
+</defs>
+</svg>
