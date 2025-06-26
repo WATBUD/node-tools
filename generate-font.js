@@ -38,7 +38,7 @@ const icons = svgFiles.map((file, idx) => {
 const selection = {
   IcoMoonType: "selection",
   icons,
-  height: 1024,
+  height: 24,
   metadata: { name: "icomoon" },
   preferences: {
     showGlyphs: true,
