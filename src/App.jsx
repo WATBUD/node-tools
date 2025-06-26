@@ -5,6 +5,8 @@ import iconSet from './assets/font/selection.json'
 // 取得所有 svg-to-ttf 資料夾下的 SVG 檔案
 const svgs = import.meta.glob('../../svg-to-ttf/*.svg', { eager: true, as: 'url' });
 
+console.log(`iconSet.icons: ${JSON.stringify(iconSet.icons,null,2)}`);
+
 function App() {
   return (
     <div className="svg-bg">

@@ -1,9 +1,10 @@
-import svgtofont from "svgtofont";
+import webfontsGenerator from "webfonts-generator";
 import path from "node:path";
 import fs from "node:fs";
 
 const srcDir = path.resolve(process.cwd(), "src/assets/svg-to-ttf");
 const outDir = path.resolve(process.cwd(), "src/assets/font");
+const MAX_ATTRIB_LENGTH = 64000;
 
 // 工具：將 24x24 path scale 到 1024x1024
 function scalePathData(pathData, fromSize = 24, toSize = 1024) {
@@ -17,12 +18,24 @@ function scalePathData(pathData, fromSize = 24, toSize = 1024) {
 
 // 1. 產生完全仿 IcoMoon 官方格式的 selection.json
 const svgFiles = fs.readdirSync(srcDir).filter(f => f.endsWith('.svg'));
+const validSvgFiles = [];
 const icons = svgFiles.map((file, idx) => {
   const name = file.replace(/\.svg$/, "");
   const svgContent = fs.readFileSync(path.join(srcDir, file), 'utf8');
+  // 檢查所有屬性值長度
+  const attrRegex = /([a-zA-Z\-:]+)=["']([^"']*)["']/g;
+  let match, tooLong = false;
+  while ((match = attrRegex.exec(svgContent)) !== null) {
+    if (match[2].length > MAX_ATTRIB_LENGTH) {
+      console.warn(`忽略 ${file}，屬性 ${match[1]} 長度 ${match[2].length}`);
+      tooLong = true;
+      break;
+    }
+  }
+  if (tooLong) return null;
+  validSvgFiles.push(path.join(srcDir, file));
   // 解析 <path d="..." />
   const pathMatches = [...svgContent.matchAll(/<path[^>]*d=["']([^"']+)["'][^>]*>/g)];
-  // scale 每個 path 到 1024x1024
   const paths = pathMatches.map(m => scalePathData(m[1], 24, 1024));
   return {
     icon: {
@@ -45,7 +58,7 @@ const icons = svgFiles.map((file, idx) => {
     setId: 1,
     iconIdx: idx
   };
-});
+}).filter(Boolean);
 const selection = {
   IcoMoonType: "selection",
   icons,
@@ -87,15 +100,24 @@ if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 fs.writeFileSync(path.join(outDir, "selection.json"), JSON.stringify(selection, null, 2));
 console.log("已產生 IcoMoon 標準 selection.json（含 path scale）");
 
-// 2. 產生 ttf 字型（給 CSS class 用）
-svgtofont({
-  src: srcDir,
-  dist: outDir,
+// 2. 用 webfonts-generator 產生 ttf 字型
+webfontsGenerator({
+  files: validSvgFiles,
+  dest: outDir,
   fontName: "icons",
+  types: ["ttf"],
   css: false,
-  website: null,
-  // 保證順序與 codepoint 一致
-  startUnicode: 59648,
-}).then(() => {
-  console.log("TTF 字型產生完成！（給 CSS class 用）");
+  startCodepoint: 59648,
+  writeFiles: true,
+  formatOptions: {
+    ttf: {
+      ts: Date.now()
+    }
+  },
+}, function(error) {
+  if (error) {
+    console.error("TTF 字型產生失敗：", error);
+  } else {
+    console.log("TTF 字型產生完成！（給 CSS class 用）");
+  }
 }); 
