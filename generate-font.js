@@ -3,6 +3,10 @@ import path from "node:path";
 import fs from "node:fs";
 import svgpath from "svgpath";
 
+// 只刪除 font 資料夾
+const fontDir = path.resolve(process.cwd(), "src/assets/font");
+if (fs.existsSync(fontDir)) fs.rmSync(fontDir, { recursive: true, force: true });
+
 const srcDir = path.resolve(process.cwd(), "src/assets/svg-to-ttf");
 const outDir = path.resolve(process.cwd(), "src/assets/font");
 const MAX_ATTRIB_LENGTH = 64000;
@@ -18,12 +22,28 @@ function normalizePathData(pathData, viewBox, toSize = 1024) {
     .toString();
 }
 
+const cleanSvgContent = (svgContent) => {
+  // 移除 <rect ... fill="white" ... />
+  svgContent = svgContent.replace(/<rect[^>]*fill=["']#?fff?["'][^>]*\/>/gi, '');
+  svgContent = svgContent.replace(/<rect[^>]*fill=["']white["'][^>]*\/>/gi, '');
+  // 移除 <clipPath> ... </clipPath> 及 <defs> ... </defs>
+  svgContent = svgContent.replace(/<clipPath[\s\S]*?<\/clipPath>/gi, '');
+  svgContent = svgContent.replace(/<defs[\s\S]*?<\/defs>/gi, '');
+  // 移除 <path d="M0 0H18V18H0V0Z" fill="white"/> 或 fill="#fff"
+  svgContent = svgContent.replace(/<path[^>]*d=["']M0 0H18V18H0V0Z["'][^>]*fill=["']#?fff?["'][^>]*\/>/gi, '');
+  svgContent = svgContent.replace(/<path[^>]*d=["']M0 0H18V18H0V0Z["'][^>]*fill=["']white["'][^>]*\/>/gi, '');
+  // 移除 <g mask=...> ... </g>
+  svgContent = svgContent.replace(/<g[^>]*mask=[^>]*>[\s\S]*?<\/g>/gi, '');
+  return svgContent;
+};
+
 // 1. 產生完全仿 IcoMoon 官方格式的 selection.json
 const svgFiles = fs.readdirSync(srcDir).filter(f => f.endsWith('.svg'));
 const validSvgFiles = [];
 const icons = svgFiles.map((file, idx) => {
   const name = file.replace(/\.svg$/, "");
-  const svgContent = fs.readFileSync(path.join(srcDir, file), 'utf8');
+  let svgContent = fs.readFileSync(path.join(srcDir, file), 'utf8');
+  svgContent = cleanSvgContent(svgContent);
   // 檢查所有屬性值長度
   const attrRegex = /([a-zA-Z\-:]+)=["']([^"']*)["']/g;
   let match, tooLong = false;
@@ -126,5 +146,13 @@ webfontsGenerator({
     console.error("TTF 字型產生失敗：", error);
   } else {
     console.log("TTF 字型產生完成！（給 CSS class 用）");
+    // 產生成功後再複製檔案
+    const targetFontDir = path.resolve(process.cwd(), 'rn-expo-project-test/assets/fonts');
+    if (!fs.existsSync(targetFontDir)) fs.mkdirSync(targetFontDir, { recursive: true });
+    // 複製 selection.json
+    fs.copyFileSync(path.join(outDir, 'selection.json'), path.join(targetFontDir, 'selection.json'));
+    // 複製 icons.ttf
+    fs.copyFileSync(path.join(outDir, 'icons.ttf'), path.join(targetFontDir, 'icons.ttf'));
+    console.log('已複製 selection.json 和 icons.ttf 到 rn-expo-project-test/assets/fonts/');
   }
 }); 
