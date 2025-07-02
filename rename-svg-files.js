@@ -13,6 +13,13 @@ if (!fs.existsSync(destDir)) {
   fs.mkdirSync(destDir, { recursive: true });
 }
 
+function toCamelCase(str) {
+  return str
+    .replace(/\s+(.)/g, (match, group1) => group1.toUpperCase())
+    .replace(/\s+/g, '')
+    .replace(/^(.)/, (match, group1) => group1.toLowerCase());
+}
+
 fs.readdirSync(srcDir).forEach(file => {
   if (file.endsWith('.svg')) {
     const srcPath = path.join(srcDir, file);
@@ -28,14 +35,19 @@ fs.readdirSync(srcDir).forEach(file => {
       }
     }
     if (tooLong) return;
-    // 重新命名：只保留最後一個 = 之後的字，首字小寫
+    // 重新命名：只保留最後一個 = 之後的字，首字小寫，空白轉小駝峰
     const lastEq = file.lastIndexOf('=');
     let newName = file;
     if (lastEq !== -1) {
-      let base = file.slice(lastEq + 1);
+      let base = file.slice(lastEq + 1, -4); // 去掉 .svg
       if (base.length === 0) return;
-      base = base.charAt(0).toLowerCase() + base.slice(1);
-      newName = base;
+      base = toCamelCase(base);
+      newName = base + '.svg';
+    } else {
+      // 沒有 =，直接用檔名去掉 .svg 再轉小駝峰
+      let base = file.slice(0, -4);
+      base = toCamelCase(base);
+      newName = base + '.svg';
     }
     const destPath = path.join(destDir, newName);
     fs.copyFileSync(srcPath, destPath);
