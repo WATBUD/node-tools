@@ -1,22 +1,26 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import CustomIconSet, { getIconNames } from '@/components/CustomIconSet';
+import iconSetComponents from '@/components/CustomIconSet';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 export default function IconListScreen() {
-  const iconNames = getIconNames();
   return (
     <ScrollView>
       <ThemedView style={styles.container}>
         <ThemedText type="title">IcoMoon Custom Icons Demo</ThemedText>
-        <View style={styles.iconGrid}>
-          {iconNames.map(name => (
-            <View key={name} style={styles.iconItem}>
-              <CustomIconSet name={name} size={32} color="#007AFF" />
-              <Text style={styles.iconName}>{name}</Text>
+        {iconSetComponents.map(set => (
+          <View key={set.key} style={{ marginBottom: 32 }}>
+            <Text style={{ fontWeight: 'bold', marginBottom: 8 }}>{set.key}</Text>
+            <View style={styles.iconGrid}>
+              {set.iconNames.map(name => (
+                <View key={name} style={styles.iconItem}>
+                  <set.IconSet name={name} size={32} color="#007AFF" />
+                  <Text style={styles.iconName}>{name}</Text>
+                </View>
+              ))}
             </View>
-          ))}
-        </View>
+          </View>
+        ))}
       </ThemedView>
     </ScrollView>
   );

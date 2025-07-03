@@ -1,49 +1,47 @@
-import webfontsGenerator from "webfonts-generator";
 import path from "node:path";
 import fs from "node:fs";
 import svgpath from "svgpath";
+import webfont from "webfont";
 
-// 只刪除 font 資料夾
-const fontDir = path.resolve(process.cwd(), "src/assets/font");
-if (fs.existsSync(fontDir)) fs.rmSync(fontDir, { recursive: true, force: true });
 
 const srcDir = path.resolve(process.cwd(), "src/assets/svg-to-ttf");
 const outDir = path.resolve(process.cwd(), "src/assets/font");
 const MAX_ATTRIB_LENGTH = 64000;
 
-// 工具：根據 viewBox 將 path 平移到 (0,0) 並縮放到 1024x1024
-function normalizePathData(pathData, viewBox, toSize = 1024) {
-  const [minX, minY, width, height] = viewBox;
-  const scale = toSize / Math.max(width, height);
-  return svgpath(pathData)
-    .translate(-minX, -minY)
-    .scale(scale)
-    .abs()
-    .toString();
-}
-
-const cleanSvgContent = (svgContent) => {
-  // 移除 <rect ... fill="white" ... />
-  svgContent = svgContent.replace(/<rect[^>]*fill=["']#?fff?["'][^>]*\/>/gi, '');
-  svgContent = svgContent.replace(/<rect[^>]*fill=["']white["'][^>]*\/>/gi, '');
-  // 移除 <clipPath> ... </clipPath> 及 <defs> ... </defs>
-  svgContent = svgContent.replace(/<clipPath[\s\S]*?<\/clipPath>/gi, '');
-  svgContent = svgContent.replace(/<defs[\s\S]*?<\/defs>/gi, '');
-  // 移除 <path d="M0 0H18V18H0V0Z" fill="white"/> 或 fill="#fff"
-  svgContent = svgContent.replace(/<path[^>]*d=["']M0 0H18V18H0V0Z["'][^>]*fill=["']#?fff?["'][^>]*\/>/gi, '');
-  svgContent = svgContent.replace(/<path[^>]*d=["']M0 0H18V18H0V0Z["'][^>]*fill=["']white["'][^>]*\/>/gi, '');
-  // 移除 <g mask=...> ... </g>
-  svgContent = svgContent.replace(/<g[^>]*mask=[^>]*>[\s\S]*?<\/g>/gi, '');
-  return svgContent;
+const cleanSvgContent = (svgContent, fileName = '') => {
+  // 遞迴移除 <mask>、<clipPath>、<defs>、<g>、<rect>
+  while (/<mask[\s\S]*?<\/mask>/i.test(svgContent)) {
+    svgContent = svgContent.replace(/<mask[\s\S]*?<\/mask>/gi, '');
+  }
+  while (/<clipPath[\s\S]*?<\/clipPath>/i.test(svgContent)) {
+    svgContent = svgContent.replace(/<clipPath[\s\S]*?<\/clipPath>/gi, '');
+  }
+  while (/<defs[\s\S]*?<\/defs>/i.test(svgContent)) {
+    svgContent = svgContent.replace(/<defs[\s\S]*?<\/defs>/gi, '');
+  }
+  while (/<g[\s\S]*?<\/g>/i.test(svgContent)) {
+    svgContent = svgContent.replace(/<g[\s\S]*?<\/g>/gi, '');
+  }
+  while (/<rect[\s\S]*?>/i.test(svgContent)) {
+    svgContent = svgContent.replace(/<rect[\s\S]*?>/gi, '');
+  }
+  // 只保留 <path ...>，且排除 fill="white"、fill="#fff"、fill-opacity、全底 path
+  const pathTags = (svgContent.match(/<path[^>]*>/gi) || []).filter(
+    tag =>
+      !/d=["']M0 0H\d+V\d+H0V0Z["']/i.test(tag) &&
+      !/fill=["']#?fff?["']/i.test(tag) &&
+      !/fill=["']white["']/i.test(tag) &&
+      !/fill-opacity/i.test(tag)
+  );
+  return `<svg>${pathTags.join('')}</svg>`;
 };
 
-// 1. 產生完全仿 IcoMoon 官方格式的 selection.json
+// 1. 產生 selection.json
 const svgFiles = fs.readdirSync(srcDir).filter(f => f.endsWith('.svg'));
 const validSvgFiles = [];
 const icons = svgFiles.map((file, idx) => {
   const name = file.replace(/\.svg$/, "");
   let svgContent = fs.readFileSync(path.join(srcDir, file), 'utf8');
-  svgContent = cleanSvgContent(svgContent);
   // 檢查所有屬性值長度
   const attrRegex = /([a-zA-Z\-:]+)=["']([^"']*)["']/g;
   let match, tooLong = false;
@@ -55,7 +53,6 @@ const icons = svgFiles.map((file, idx) => {
     }
   }
   if (tooLong) return null;
-  validSvgFiles.push(path.join(srcDir, file));
   // 解析 viewBox
   const viewBoxMatch = svgContent.match(/viewBox=["']\s*([\d.\-]+)\s+([\d.\-]+)\s+([\d.\-]+)\s+([\d.\-]+)\s*["']/);
   const viewBox = viewBoxMatch
@@ -63,7 +60,8 @@ const icons = svgFiles.map((file, idx) => {
     : [0, 0, 24, 24]; // fallback
   // 解析 <path d="..." />
   const pathMatches = [...svgContent.matchAll(/<path[^>]*d=["']([^"']+)["'][^>]*>/g)];
-  const paths = pathMatches.map(m => normalizePathData(m[1], viewBox, 1024));
+  const paths = pathMatches.map(m => svgpath(m[1]).abs().toString());
+  validSvgFiles.push(path.join(srcDir, file));
   return {
     icon: {
       paths,
@@ -127,32 +125,30 @@ if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 fs.writeFileSync(path.join(outDir, "selection.json"), JSON.stringify(selection, null, 2));
 console.log("已產生 IcoMoon 標準 selection.json（含 path scale）");
 
-// 2. 用 webfonts-generator 產生 ttf 字型
-webfontsGenerator({
-  files: validSvgFiles,
-  dest: outDir,
-  fontName: "icons",
-  types: ["ttf"],
-  css: false,
-  startCodepoint: 59648,
-  writeFiles: true,
-  formatOptions: {
-    ttf: {
-      ts: Date.now()
-    }
-  },
-}, function(error) {
-  if (error) {
-    console.error("TTF 字型產生失敗：", error);
-  } else {
-    console.log("TTF 字型產生完成！（給 CSS class 用）");
-    // 產生成功後再複製檔案
+// 2. 用 webfont 產生 ttf 字型
+(async () => {
+  try {
+    const result = await webfont.default({
+      files: validSvgFiles,
+      fontName: "icons",
+      formats: ["ttf"],
+      dest: outDir,
+      template: null,
+      startUnicode: 0xE900,
+      normalize: true,
+      fontHeight: 1024,
+      descent: 0,
+    });
+    // 寫入 ttf
+    fs.writeFileSync(path.join(outDir, "icons.ttf"), result.ttf);
+    console.log("TTF 字型產生完成！（webfont）");
+    // 複製到 rn-expo-project-test/assets/fonts
     const targetFontDir = path.resolve(process.cwd(), 'rn-expo-project-test/assets/fonts');
     if (!fs.existsSync(targetFontDir)) fs.mkdirSync(targetFontDir, { recursive: true });
-    // 複製 selection.json
     fs.copyFileSync(path.join(outDir, 'selection.json'), path.join(targetFontDir, 'selection.json'));
-    // 複製 icons.ttf
     fs.copyFileSync(path.join(outDir, 'icons.ttf'), path.join(targetFontDir, 'icons.ttf'));
     console.log('已複製 selection.json 和 icons.ttf 到 rn-expo-project-test/assets/fonts/');
+  } catch (error) {
+    console.error('TTF 字型產生失敗：', error);
   }
-}); 
+})(); 

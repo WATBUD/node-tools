@@ -8,6 +8,16 @@ const __dirname = path.dirname(__filename);
 const srcDir = path.join(__dirname, 'src/assets/svg-to-ttf-original');
 const destDir = path.join(__dirname, 'src/assets/svg-to-ttf');
 const MAX_ATTRIB_LENGTH = 64000;
+// 先刪除 svg-to-ttf 資料夾（如果存在），再重建空資料夾
+const svgToTtfDir = path.resolve(process.cwd(), "src/assets/svg-to-ttf");
+if (fs.existsSync(svgToTtfDir)) fs.rmSync(svgToTtfDir, { recursive: true, force: true });
+
+
+// 只刪除 font 資料夾
+const fontDir = path.resolve(process.cwd(), "src/assets/font");
+if (fs.existsSync(fontDir)) fs.rmSync(fontDir, { recursive: true, force: true });
+
+console.log("已清空請再執行產生字型！");
 
 if (!fs.existsSync(destDir)) {
   fs.mkdirSync(destDir, { recursive: true });
