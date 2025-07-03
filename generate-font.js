@@ -4,7 +4,7 @@ import svgpath from "svgpath";
 import webfont from "webfont";
 
 
-const srcDir = path.resolve(process.cwd(), "src/assets/svg-to-ttf");
+const srcDir = path.resolve(process.cwd(), "src/assets/svg-to-ttf-outline");
 const outDir = path.resolve(process.cwd(), "src/assets/font");
 const MAX_ATTRIB_LENGTH = 64000;
 

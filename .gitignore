@@ -16,6 +16,8 @@ dist-ssr
 
 /src/assets/font
 /src/assets/svg-to-ttf
+/src/assets/svg-to-ttf-outline
+/src/assets/svg-to-ttf-rename
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
