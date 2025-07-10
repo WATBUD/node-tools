@@ -2,29 +2,20 @@ import './App.css'
 import CustomIcon from './CustomIcon'
 import iconSet from './assets/font/selection.json'
 
-// 取得所有 svg-to-ttf 資料夾下的 SVG 檔案
-const svgs = import.meta.glob('../../svg-to-ttf/*.svg', { eager: true, as: 'url' });
+const svgs = import.meta.glob('./assets/svg-to-ttf-rename/*.svg', { eager: true, query: '?url', import: 'default' });
 
 console.log(`iconSet.icons: ${JSON.stringify(iconSet.icons,null,2)}`);
 
 function App() {
   return (
     <div className="svg-bg">
-      <div style={{ display: 'flex', gap: 40, justifyContent: 'center',flexWrap: 'wrap' }}>
-        {/* 自動根據 selection.json 產生所有 CustomIcon */}
-        {iconSet.icons.map(icon => (
-          <div key={icon.properties.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <CustomIcon name={icon.properties.name} size={35} 
-            style={{ marginBottom: 8 }} />
-            <div className="label">{icon.properties.name}</div>
-          </div>
-        ))}
+      <div style={{ display: 'flex', gap: 10, justifyContent: 'center',flexWrap: 'wrap' }}>
         {/* 原本的 SVG 圖示展示 */}
         {Object.entries(svgs).map(([path, url]) => {
           const name = path.split('/').pop().replace('.svg', '');
           return (
             <div key={name}>
-              <img src={url} alt={name} className="svg-icon" />
+              <img src={url} alt={name} className="svg-icon" style={{ width: 40, height: 40 }} />
               <div className="label">{name}</div>
             </div>
           );
