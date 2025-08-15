@@ -6,7 +6,7 @@ npm install svg-outline-stroke webfont svgpath
 - `webfont`：SVG 轉 TTF 字型用
 - `svgpath`：SVG path 處理
 
-
+產生完可到 /src/assets/font 複製檔案
 
 
 ### 必要 CLI 工具:
