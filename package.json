@@ -13,7 +13,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "proxy:dev": "node proxy/index.js"
+    "proxy:dev": "node proxy/index.js",
+    "proxy2": "node proxy/proxy2.js"
   },
   "dependencies": {
     "express": "^5.1.0",

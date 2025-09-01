@@ -40,7 +40,7 @@ const corsMiddleware = (req, res, next) => {
 
 app.use(corsMiddleware);
 
-const TARGET_API = "https://oambackend.chtineer.com/";
+const TARGET_API = "https://oscbackend.chtineer.com";
 const options = {
   target: TARGET_API,
   changeOrigin: true,
